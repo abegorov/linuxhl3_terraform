@@ -1,0 +1,24 @@
+---
+${yamlencode(
+  merge({
+    all = {
+      vars = {
+        ansible_user = "${ssh_username}"
+        ansible_ssh_private_key_file = "${ssh_key_file}"
+        ansible_ssh_common_args = "-o StrictHostKeyChecking=no"
+      }
+    }
+  },
+  {
+    for group in groups :
+    group.name => {
+      hosts = {
+        for host in group.hosts :
+        host.hostname => {
+          ansible_host = "${host.network_interface.0.nat_ip_address}"
+        }
+      }
+    }
+  })
+)}
+...
