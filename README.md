@@ -97,5 +97,603 @@
 Запустим скрипт [up.sh](up.sh):
 
 ```text
+❯ ./up.sh
+Initializing the backend...
+Initializing provider plugins...
+- Finding yandex-cloud/yandex versions matching "0.138.0"...
+- Finding hashicorp/local versions matching "2.5.2"...
+- Installing yandex-cloud/yandex v0.138.0...
+- Installed yandex-cloud/yandex v0.138.0 (unauthenticated)
+- Installing hashicorp/local v2.5.2...
+- Installed hashicorp/local v2.5.2 (unauthenticated)
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
 
+╷
+│ Warning: Incomplete lock file information for providers
+│
+│ Due to your customized provider installation methods, Terraform was forced to calculate lock file checksums locally for the following
+│ providers:
+│   - hashicorp/local
+│   - yandex-cloud/yandex
+│
+│ The current .terraform.lock.hcl file only includes checksums for linux_amd64, so Terraform running on another platform will fail to
+│ install these providers.
+│
+│ To calculate additional checksums for another platform, run:
+│   terraform providers lock -platform=linux_amd64
+│ (where linux_amd64 is the platform to generate)
+╵
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+data.yandex_compute_image.ubuntu2404: Reading...
+data.yandex_compute_image.ubuntu2404: Read complete after 0s [id=fd85hkli5dp6as39ali4]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # local_file.inventory will be created
+  + resource "local_file" "inventory" {
+      + content              = (known after apply)
+      + content_base64sha256 = (known after apply)
+      + content_base64sha512 = (known after apply)
+      + content_md5          = (known after apply)
+      + content_sha1         = (known after apply)
+      + content_sha256       = (known after apply)
+      + content_sha512       = (known after apply)
+      + directory_permission = "0777"
+      + file_permission      = "0777"
+      + filename             = "./inventory.yml"
+      + id                   = (known after apply)
+    }
+
+  # yandex_compute_instance.default[0] will be created
+  + resource "yandex_compute_instance" "default" {
+      + created_at                = (known after apply)
+      + folder_id                 = (known after apply)
+      + fqdn                      = (known after apply)
+      + gpu_cluster_id            = (known after apply)
+      + hardware_generation       = (known after apply)
+      + hostname                  = "nginx-01"
+      + id                        = (known after apply)
+      + maintenance_grace_period  = (known after apply)
+      + maintenance_policy        = (known after apply)
+      + metadata                  = {
+          + "install-unified-agent" = "0"
+          + "serial-port-enable"    = "0"
+          + "user-data"             = <<-EOT
+                #cloud-config
+                datasource:
+                 Ec2:
+                  strict_id: false
+                ssh_pwauth: no
+                users:
+                - name: ansible
+                  sudo: ALL=(ALL) NOPASSWD:ALL
+                  shell: /bin/bash
+                  ssh_authorized_keys:
+                  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmP84KKx4IPFlprEN8O06HcHNyCrnufDfV+6fc7ujrp terraform
+            EOT
+        }
+      + name                      = "nginx-01"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v3"
+      + service_account_id        = (known after apply)
+      + status                    = (known after apply)
+      + zone                      = (known after apply)
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+
+          + initialize_params {
+              + block_size  = (known after apply)
+              + description = (known after apply)
+              + image_id    = "fd85hkli5dp6as39ali4"
+              + name        = (known after apply)
+              + size        = 20
+              + snapshot_id = (known after apply)
+              + type        = "network-hdd"
+            }
+        }
+
+      + metadata_options (known after apply)
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = (known after apply)
+        }
+
+      + placement_policy (known after apply)
+
+      + resources {
+          + core_fraction = 20
+          + cores         = 2
+          + memory        = 1
+        }
+
+      + scheduling_policy {
+          + preemptible = true
+        }
+    }
+
+  # yandex_compute_instance.default[1] will be created
+  + resource "yandex_compute_instance" "default" {
+      + created_at                = (known after apply)
+      + folder_id                 = (known after apply)
+      + fqdn                      = (known after apply)
+      + gpu_cluster_id            = (known after apply)
+      + hardware_generation       = (known after apply)
+      + hostname                  = "nginx-02"
+      + id                        = (known after apply)
+      + maintenance_grace_period  = (known after apply)
+      + maintenance_policy        = (known after apply)
+      + metadata                  = {
+          + "install-unified-agent" = "0"
+          + "serial-port-enable"    = "0"
+          + "user-data"             = <<-EOT
+                #cloud-config
+                datasource:
+                 Ec2:
+                  strict_id: false
+                ssh_pwauth: no
+                users:
+                - name: ansible
+                  sudo: ALL=(ALL) NOPASSWD:ALL
+                  shell: /bin/bash
+                  ssh_authorized_keys:
+                  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmP84KKx4IPFlprEN8O06HcHNyCrnufDfV+6fc7ujrp terraform
+            EOT
+        }
+      + name                      = "nginx-02"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v3"
+      + service_account_id        = (known after apply)
+      + status                    = (known after apply)
+      + zone                      = (known after apply)
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+
+          + initialize_params {
+              + block_size  = (known after apply)
+              + description = (known after apply)
+              + image_id    = "fd85hkli5dp6as39ali4"
+              + name        = (known after apply)
+              + size        = 20
+              + snapshot_id = (known after apply)
+              + type        = "network-hdd"
+            }
+        }
+
+      + metadata_options (known after apply)
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = (known after apply)
+        }
+
+      + placement_policy (known after apply)
+
+      + resources {
+          + core_fraction = 20
+          + cores         = 2
+          + memory        = 1
+        }
+
+      + scheduling_policy {
+          + preemptible = true
+        }
+    }
+
+  # yandex_vpc_network.default will be created
+  + resource "yandex_vpc_network" "default" {
+      + created_at                = (known after apply)
+      + default_security_group_id = (known after apply)
+      + folder_id                 = (known after apply)
+      + id                        = (known after apply)
+      + labels                    = (known after apply)
+      + name                      = "nginx"
+      + subnet_ids                = (known after apply)
+    }
+
+  # yandex_vpc_subnet.default will be created
+  + resource "yandex_vpc_subnet" "default" {
+      + created_at     = (known after apply)
+      + folder_id      = (known after apply)
+      + id             = (known after apply)
+      + labels         = (known after apply)
+      + name           = "nginx-ru-central1-d"
+      + network_id     = (known after apply)
+      + v4_cidr_blocks = [
+          + "10.130.0.0/24",
+        ]
+      + v6_cidr_blocks = (known after apply)
+      + zone           = (known after apply)
+    }
+
+Plan: 5 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + instance_ips = {
+      + nginx-01 = (known after apply)
+      + nginx-02 = (known after apply)
+    }
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform
+apply" now.
+data.yandex_compute_image.ubuntu2404: Reading...
+data.yandex_compute_image.ubuntu2404: Read complete after 0s [id=fd85hkli5dp6as39ali4]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # local_file.inventory will be created
+  + resource "local_file" "inventory" {
+      + content              = (known after apply)
+      + content_base64sha256 = (known after apply)
+      + content_base64sha512 = (known after apply)
+      + content_md5          = (known after apply)
+      + content_sha1         = (known after apply)
+      + content_sha256       = (known after apply)
+      + content_sha512       = (known after apply)
+      + directory_permission = "0777"
+      + file_permission      = "0777"
+      + filename             = "./inventory.yml"
+      + id                   = (known after apply)
+    }
+
+  # yandex_compute_instance.default[0] will be created
+  + resource "yandex_compute_instance" "default" {
+      + created_at                = (known after apply)
+      + folder_id                 = (known after apply)
+      + fqdn                      = (known after apply)
+      + gpu_cluster_id            = (known after apply)
+      + hardware_generation       = (known after apply)
+      + hostname                  = "nginx-01"
+      + id                        = (known after apply)
+      + maintenance_grace_period  = (known after apply)
+      + maintenance_policy        = (known after apply)
+      + metadata                  = {
+          + "install-unified-agent" = "0"
+          + "serial-port-enable"    = "0"
+          + "user-data"             = <<-EOT
+                #cloud-config
+                datasource:
+                 Ec2:
+                  strict_id: false
+                ssh_pwauth: no
+                users:
+                - name: ansible
+                  sudo: ALL=(ALL) NOPASSWD:ALL
+                  shell: /bin/bash
+                  ssh_authorized_keys:
+                  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmP84KKx4IPFlprEN8O06HcHNyCrnufDfV+6fc7ujrp terraform
+            EOT
+        }
+      + name                      = "nginx-01"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v3"
+      + service_account_id        = (known after apply)
+      + status                    = (known after apply)
+      + zone                      = (known after apply)
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+
+          + initialize_params {
+              + block_size  = (known after apply)
+              + description = (known after apply)
+              + image_id    = "fd85hkli5dp6as39ali4"
+              + name        = (known after apply)
+              + size        = 20
+              + snapshot_id = (known after apply)
+              + type        = "network-hdd"
+            }
+        }
+
+      + metadata_options (known after apply)
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = (known after apply)
+        }
+
+      + placement_policy (known after apply)
+
+      + resources {
+          + core_fraction = 20
+          + cores         = 2
+          + memory        = 1
+        }
+
+      + scheduling_policy {
+          + preemptible = true
+        }
+    }
+
+  # yandex_compute_instance.default[1] will be created
+  + resource "yandex_compute_instance" "default" {
+      + created_at                = (known after apply)
+      + folder_id                 = (known after apply)
+      + fqdn                      = (known after apply)
+      + gpu_cluster_id            = (known after apply)
+      + hardware_generation       = (known after apply)
+      + hostname                  = "nginx-02"
+      + id                        = (known after apply)
+      + maintenance_grace_period  = (known after apply)
+      + maintenance_policy        = (known after apply)
+      + metadata                  = {
+          + "install-unified-agent" = "0"
+          + "serial-port-enable"    = "0"
+          + "user-data"             = <<-EOT
+                #cloud-config
+                datasource:
+                 Ec2:
+                  strict_id: false
+                ssh_pwauth: no
+                users:
+                - name: ansible
+                  sudo: ALL=(ALL) NOPASSWD:ALL
+                  shell: /bin/bash
+                  ssh_authorized_keys:
+                  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmP84KKx4IPFlprEN8O06HcHNyCrnufDfV+6fc7ujrp terraform
+            EOT
+        }
+      + name                      = "nginx-02"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v3"
+      + service_account_id        = (known after apply)
+      + status                    = (known after apply)
+      + zone                      = (known after apply)
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+
+          + initialize_params {
+              + block_size  = (known after apply)
+              + description = (known after apply)
+              + image_id    = "fd85hkli5dp6as39ali4"
+              + name        = (known after apply)
+              + size        = 20
+              + snapshot_id = (known after apply)
+              + type        = "network-hdd"
+            }
+        }
+
+      + metadata_options (known after apply)
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = (known after apply)
+        }
+
+      + placement_policy (known after apply)
+
+      + resources {
+          + core_fraction = 20
+          + cores         = 2
+          + memory        = 1
+        }
+
+      + scheduling_policy {
+          + preemptible = true
+        }
+    }
+
+  # yandex_vpc_network.default will be created
+  + resource "yandex_vpc_network" "default" {
+      + created_at                = (known after apply)
+      + default_security_group_id = (known after apply)
+      + folder_id                 = (known after apply)
+      + id                        = (known after apply)
+      + labels                    = (known after apply)
+      + name                      = "nginx"
+      + subnet_ids                = (known after apply)
+    }
+
+  # yandex_vpc_subnet.default will be created
+  + resource "yandex_vpc_subnet" "default" {
+      + created_at     = (known after apply)
+      + folder_id      = (known after apply)
+      + id             = (known after apply)
+      + labels         = (known after apply)
+      + name           = "nginx-ru-central1-d"
+      + network_id     = (known after apply)
+      + v4_cidr_blocks = [
+          + "10.130.0.0/24",
+        ]
+      + v6_cidr_blocks = (known after apply)
+      + zone           = (known after apply)
+    }
+
+Plan: 5 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + instance_ips = {
+      + nginx-01 = (known after apply)
+      + nginx-02 = (known after apply)
+    }
+yandex_vpc_network.default: Creating...
+yandex_vpc_network.default: Creation complete after 2s [id=enpa93pjio3perhaaquo]
+yandex_vpc_subnet.default: Creating...
+yandex_vpc_subnet.default: Creation complete after 1s [id=fl867jccbsu0njq0ahlj]
+yandex_compute_instance.default[1]: Creating...
+yandex_compute_instance.default[0]: Creating...
+yandex_compute_instance.default[0]: Still creating... [10s elapsed]
+yandex_compute_instance.default[1]: Still creating... [10s elapsed]
+yandex_compute_instance.default[1]: Still creating... [20s elapsed]
+yandex_compute_instance.default[0]: Still creating... [20s elapsed]
+yandex_compute_instance.default[1]: Still creating... [30s elapsed]
+yandex_compute_instance.default[0]: Still creating... [30s elapsed]
+yandex_compute_instance.default[1]: Creation complete after 40s [id=fv46jt7k096kq80salkc]
+yandex_compute_instance.default[0]: Still creating... [40s elapsed]
+yandex_compute_instance.default[0]: Creation complete after 44s [id=fv4c7aekos80b9l7qasi]
+local_file.inventory: Creating...
+local_file.inventory: Creation complete after 0s [id=3ca2f0e4d4c55ed786cfa281b0010c548a3e28e1]
+
+Apply complete! Resources: 5 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+instance_ips = {
+  "nginx-01" = "158.160.130.241"
+  "nginx-02" = "158.160.146.32"
+}
+
+PLAY [Wait for connection] ******************************************************************************************************************
+
+TASK [wait_connection : Wait 600 seconds for target connection to become reachable/usable] **************************************************
+ok: [nginx-01]
+ok: [nginx-02]
+
+TASK [nginx : Install nginx] ****************************************************************************************************************
+The following additional packages will be installed:
+  nginx-common
+Suggested packages:
+  fcgiwrap nginx-doc ssl-cert
+The following NEW packages will be installed:
+  nginx nginx-common
+0 upgraded, 2 newly installed, 0 to remove and 15 not upgraded.
+changed: [nginx-01]
+The following additional packages will be installed:
+  nginx-common
+Suggested packages:
+  fcgiwrap nginx-doc ssl-cert
+The following NEW packages will be installed:
+  nginx nginx-common
+0 upgraded, 2 newly installed, 0 to remove and 15 not upgraded.
+changed: [nginx-02]
+
+PLAY RECAP **********************************************************************************************************************************
+nginx-01                   : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+nginx-02                   : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
+
+Как видно машины создались, **ansible** к ним подключился и **nginx** установился. Проверим адреса машин:
+
+```text
+❯ terraform output
+instance_ips = {
+  "nginx-01" = "158.160.130.241"
+  "nginx-02" = "158.160.146.32"
+}
+```
+
+Можно дополнительно проверить, что указанные адреса открываются:
+
+```text
+❯ curl 158.160.130.241
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+
+❯ curl 158.160.146.32
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+```
+
+Всё успешно работает, можно удалить машины через `terraform destory`.
