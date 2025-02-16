@@ -1,4 +1,3 @@
-
 data "yandex_compute_image" "ubuntu2404" {
   family = "ubuntu-2404-lts-oslogin"
 }
