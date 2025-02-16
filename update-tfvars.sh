@@ -4,12 +4,12 @@ set -eu
 PROJECT=nginx
 ZONE=ru-central1-d
 
-TOKEN="$(yc iam create-token)"
-CLOUD_ID="$(yc config get cloud-id)"
-FOLDER_ID="$(yc config get folder-id)"
+TOKEN=$(yc iam create-token)
+CLOUD_ID=$(yc config get cloud-id)
+FOLDER_ID=$(yc config get folder-id)
 
-SSH_USERNAME=admin
-SSH_KEY_FILE="secrets/yandex-cloud"
+SSH_USERNAME=ansible
+SSH_KEY_FILE=secrets/yandex-cloud
 
 
 test -f "${SSH_KEY_FILE}" || \
