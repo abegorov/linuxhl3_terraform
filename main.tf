@@ -45,7 +45,7 @@ resource "yandex_compute_instance" "default" {
 }
 resource "local_file" "inventory" {
   filename = "${path.root}/inventory.yml"
-  content = templatefile("${path.module}/inventory.tmpl", {
+  content = templatefile("${path.module}/inventory.tftpl", {
     ssh_username = var.ssh_username,
     ssh_key_file = var.ssh_key_file,
     groups = [
