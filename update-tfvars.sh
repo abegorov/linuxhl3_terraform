@@ -14,7 +14,7 @@ SSH_KEY_FILE=secrets/yandex-cloud
 
 test -f "${SSH_KEY_FILE}" || \
   ssh-keygen -q -t ed25519 -f "${SSH_KEY_FILE}" -C terraform -N ''
-cat <<EOF > "$(dirname "${0}")/terraform.tfvars"
+cat <<EOF > "terraform.tfvars"
 project = "${PROJECT}"
 token = "${TOKEN}"
 cloud_id = "${CLOUD_ID}"
