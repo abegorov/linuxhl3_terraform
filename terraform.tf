@@ -2,12 +2,12 @@ terraform {
   required_providers {
     local = {
       source  = "hashicorp/local"
-      version = "2.5.2"
+      version = "~> 2.5"
     }
     yandex = {
       source  = "yandex-cloud/yandex"
-      version = "0.138.0"
+      version = "~> 0.138"
     }
   }
-  required_version = "1.10.5"
+  required_version = "~> 1.10"
 }

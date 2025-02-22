@@ -1,6 +1,5 @@
 **/.terraform/*
 .ansible/*
-.terraform.lock.hcl
 *.tfstate
 *.tfstate.*
 crash.log
