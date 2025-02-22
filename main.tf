@@ -4,10 +4,23 @@ data "yandex_compute_image" "ubuntu2404" {
 resource "yandex_vpc_network" "default" {
   name = var.project
 }
+resource "yandex_vpc_gateway" "default" {
+  name = var.project
+  shared_egress_gateway {}
+}
+resource "yandex_vpc_route_table" "default" {
+  name       = var.project
+  network_id = yandex_vpc_network.default.id
+  static_route {
+    destination_prefix = "0.0.0.0/0"
+    gateway_id         = yandex_vpc_gateway.default.id
+  }
+}
 resource "yandex_vpc_subnet" "default" {
   name           = "${var.project}-${var.zone}"
   network_id     = yandex_vpc_network.default.id
   v4_cidr_blocks = ["10.130.0.0/24"]
+  route_table_id = yandex_vpc_route_table.default.id
 }
 resource "yandex_compute_instance" "default" {
   count       = 2
